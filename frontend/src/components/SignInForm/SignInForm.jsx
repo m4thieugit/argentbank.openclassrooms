@@ -1,25 +1,38 @@
 import React from 'react';
 import './SignInForm.css';
 
-
-const SignInForm = () => {
+const SignInForm = ({ email, setEmail, password, setPassword, handleLogin }) => {
     return (
-        <form>
+        <form onSubmit={handleLogin}>
             <div className="input-wrapper">
-                <label for="username">Username</label>
-                <input type="text" id="username" />
+                <label htmlFor="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Votre adresse e-mail"
+                />
             </div>
             <div className="input-wrapper">
-                <label for="password">Password</label>
-                <input type="password" id="password" />
+                <label htmlFor="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Votre mot de passe"
+                />
             </div>
             <div className="input-remember">
                 <input type="checkbox" id="remember-me" />
-                <label for="remember-me">Remember me</label>
+                <label htmlFor="remember-me">Remember me</label>
             </div>
-            <a href="/user" className="sign-in-button">Sign In</a>
+            <button type="submit" className="sign-in-button">
+                Sign In
+            </button>
         </form>
-    )
-}
+    );
+};
 
 export default SignInForm;

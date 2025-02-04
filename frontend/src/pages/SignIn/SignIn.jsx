@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './SignIn.css';
 
@@ -13,6 +13,8 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const { error } = useSelector((state) => state.auth);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -31,7 +33,6 @@ const SignIn = () => {
             navigate('/user');
         } catch (error) {
             dispatch(loginFailure(error.message || 'Erreur de connexion'));
-            alert('Erreur.');
             console.error(error);
         }
     };
@@ -40,6 +41,7 @@ const SignIn = () => {
         <section className="sign-in-content">
             <i className="fa fa-user-circle"></i>
             <h1>Sign In</h1>
+            { error && <p style={{ marginBottom: '10px' }}>{error}</p>}
             <SignInForm
                 email={email}
                 setEmail={setEmail}

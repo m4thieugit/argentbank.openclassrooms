@@ -17,35 +17,36 @@ const authSlice = createSlice({
             state.isAuthenticated = true;
 
             if (!action.payload.rememberMe || action.payload.rememberMe === 'false') {
-                localStorage.setItem('token', action.payload.token);
-                localStorage.setItem('isAuthenticated', true);
-            } else {
                 sessionStorage.setItem('token', action.payload.token);
                 sessionStorage.setItem('isAuthenticated', true);
                 state.rememberMe = false;
+            } else {
+                localStorage.setItem('token', action.payload.token);
+                localStorage.setItem('isAuthenticated', true);
+                state.rememberMe = true;
             }
         },
         updateUserData: (state, action) => {
             const userData = JSON.stringify(action.payload);
             state.userData = userData;
-            if (!sessionStorage.getItem('isAuthenticated')) {
-                localStorage.setItem('userData', userData);
-            } else {
+            if (!localStorage.getItem('isAuthenticated')) {
                 sessionStorage.setItem('userData', userData);
+            } else {
+                localStorage.setItem('userData', userData);
             }
         },
         logoutSuccess: (state) => {
             state.token = null;
             state.isAuthenticated = false;
 
-            if (!sessionStorage.getItem('isAuthenticated')) {
-                localStorage.removeItem('token');
-                localStorage.removeItem('isAuthenticated');
-                localStorage.removeItem('userData');
-            } else {
+            if (!localStorage.getItem('isAuthenticated')) {
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('isAuthenticated');
                 sessionStorage.removeItem('userData');
+            } else {
+                localStorage.removeItem('token');
+                localStorage.removeItem('isAuthenticated');
+                localStorage.removeItem('userData');
                 state.rememberMe = false;
             }
         },

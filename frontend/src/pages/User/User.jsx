@@ -1,37 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserData } from '../../authService';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import './User.css';
 
 import EditButton from '../../components/EditButton';
+import Account from '../../components/Account';
 
 const User = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const { isAuthenticated, token } = useSelector((state) => state.auth);
-    const [userData, setUserData] = useState({ id: null, firstName: null, lastName: null, userName: null, email: null, createdAt: null, updatedAt: null });
-
-    useEffect(() => {
-        if (isAuthenticated && token) {
-            fetchUserData(token)
-                .then((data) => {
-                    setUserData({ data });
-                })
-                .catch((error) => {
-                    console.error('Erreur lors de la récupération des données utilisateur :', error);
-                });
-        }
-    }, [isAuthenticated, token]);
-
+    const { userData } = useSelector((state) => state.auth);
+    const uData = JSON.parse(userData);
 
     return (
-        <div class="header">
-            <h1>Welcome back<br />Tony Jarvis!</h1>
-            <EditButton />
-        </div>
+        <>
+            <div className="header">
+                <h1>Welcome back<br />{uData?.firstName ?? ''} {uData?.lastName ?? ''}!</h1>
+                <EditButton />
+            </div>
+            <h2 className="sr-only">Accounts</h2>
+            <Account title="Argent Bank Checking (x8349)" amount="$2,082.79" description="Available Balance" />
+            <Account title="Argent Bank Savings (x6712)" amount="$10,928.4" description="Available Balance" />
+            <Account title="Argent Bank Credit Card (x8349)" amount="$184.30" description="Current Balance" />
+        </>
     )
 }
 

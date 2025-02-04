@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import './SignIn.css';
-
 import { loginSuccess, updateUserData, loginFailure } from '../../authSlice';
 import { loginUser, fetchUserData } from '../../authService';
+
+import './SignIn.css';
+
 import SignInForm from '../../components/SignInForm';
 
 const SignIn = () => {
@@ -41,7 +42,7 @@ const SignIn = () => {
         <section className="sign-in-content">
             <i className="fa fa-user-circle"></i>
             <h1>Sign In</h1>
-            { error && <p style={{ marginBottom: '10px' }}>{error}</p>}
+            { error && <p style={{ marginBottom: '10px' }}>{error}</p> }
             <SignInForm
                 email={email}
                 setEmail={setEmail}

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserData } from '../../authService';
 import { logoutSuccess } from '../../authSlice';
 
 import './Navbar.css';
@@ -36,7 +35,7 @@ const Navbar = () => {
                         <div>
                             <a className="main-nav-item" href="/user">
                                 <i className="fa fa-user-circle"></i>
-                                {` ${uData?.firstName ?? '' } `}
+                                {` ${uData?.userName ?? '' } `}
                             </a>
                             <a className="main-nav-item" onClick={() => logoutUser()} href="#">
                                 <i className="fa fa-sign-out"></i>

@@ -41,3 +41,25 @@ export async function fetchUserData(token) {
         throw new Error('Une erreur est survenue lors de la tentative de récupération des données utilisateur.');
     }
 }
+
+export async function updateUsername(token, userName) {
+    try {
+        const response = await fetch(config.backend.base_url + config.backend.endpoints.user.profile, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ userName }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Une erreur est survenue lors de la tentative de récupération des données utilisateur.');
+        }
+
+        const data = await response.json();
+        return data.body;
+    } catch (error) {
+        throw new Error('Une erreur est survenue lors de la tentative de récupération des données utilisateur.');
+    }
+}

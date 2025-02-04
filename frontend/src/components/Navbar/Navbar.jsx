@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../../authService';
+import { logoutSuccess } from '../../authSlice';
 
 import './Navbar.css';
 
@@ -10,12 +11,17 @@ const Navbar = () => {
     const { isAuthenticated, token } = useSelector((state) => state.auth);
     const [userData, setUserData] = useState({ userName: null });
 
+    const dispatch = useDispatch();
+    
+    const logoutUser = () => { 
+        dispatch(logoutSuccess());
+    };
+
     useEffect(() => {
         if (isAuthenticated && token) {
             fetchUserData(token)
                 .then((data) => {
-                    console.log(data);
-                    setUserData(data);
+                    setUserData({ userName: data?.userName ?? null });
                 })
                 .catch((error) => {
                     console.error('Erreur lors de la récupération des données utilisateur :', error);
@@ -42,7 +48,7 @@ const Navbar = () => {
                                 <i className="fa fa-user-circle"></i>
                                 {` ${userData.userName} ` || ''}
                             </a>
-                            <a className="main-nav-item" href="/logout">
+                            <a className="main-nav-item" onClick={() => logoutUser()} href="#">
                                 <i className="fa fa-sign-out"></i>
                                 {' Sign Out '}
                             </a>

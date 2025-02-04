@@ -21,17 +21,9 @@ const SignIn = () => {
                 email: e.target.email.value,
                 password: e.target.password.value
             }
+
             const token = await loginUser(loginData);
-            dispatch(loginSuccess(token));
-
-            if (e.target['remember-me'].checked === true) {
-                sessionStorage.setItem('isAuthenticated', true);
-                sessionStorage.setItem('token', token);
-            } else {
-                localStorage.setItem('isAuthenticated', token);
-                localStorage.setItem('token', token);
-            }
-
+            dispatch(loginSuccess({ token, rememberMe: e.target['remember-me'].checked }));
             navigate('/user');
         } catch (error) {
             dispatch(loginFailure(error.message || 'Erreur de connexion'));

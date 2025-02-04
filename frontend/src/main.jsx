@@ -14,8 +14,8 @@ import User from './pages/User';
 import NotFound from './pages/NotFound';
 
 createRoot(document.getElementById('root')).render(
-  <Provider store={authStore}>
-    <React.StrictMode>
+  <React.StrictMode>
+    <Provider store={authStore}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
@@ -26,6 +26,6 @@ createRoot(document.getElementById('root')).render(
           </Route>
         </Routes>
       </BrowserRouter>
-    </React.StrictMode>
-  </Provider>
+    </Provider>
+  </React.StrictMode>
 );

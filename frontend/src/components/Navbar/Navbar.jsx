@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../../authService';
 import { logoutSuccess } from '../../authSlice';
@@ -8,27 +9,16 @@ import './Navbar.css';
 import AppLogo from '../../assets/img/argentBankLogo.png';
 
 const Navbar = () => {
-    const { isAuthenticated, token } = useSelector((state) => state.auth);
-    const [userData, setUserData] = useState({ userName: null });
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+
+    const { isAuthenticated, token, userData } = useSelector((state) => state.auth);
+    const uData = JSON.parse(userData);
+
     const logoutUser = () => { 
         dispatch(logoutSuccess());
+        navigate('/sign-in');
     };
-
-    useEffect(() => {
-        if (isAuthenticated && token) {
-            fetchUserData(token)
-                .then((data) => {
-                    setUserData({ userName: data?.userName ?? null });
-                })
-                .catch((error) => {
-                    console.error('Erreur lors de la récupération des données utilisateur :', error);
-                });
-        }
-    }, [isAuthenticated, token]);
-
 
     return (
         <nav className="main-nav">
@@ -46,7 +36,7 @@ const Navbar = () => {
                         <div>
                             <a className="main-nav-item" href="/user">
                                 <i className="fa fa-user-circle"></i>
-                                {` ${userData.userName} ` || ''}
+                                {` ${uData?.firstName ?? '' } `}
                             </a>
                             <a className="main-nav-item" onClick={() => logoutUser()} href="#">
                                 <i className="fa fa-sign-out"></i>
@@ -56,7 +46,7 @@ const Navbar = () => {
                     :
                         <a className="main-nav-item" href="/sign-in">
                             <i className="fa fa-user-circle"></i>
-                            Sign In
+                            {' Sign In '}
                         </a>
                     }
 

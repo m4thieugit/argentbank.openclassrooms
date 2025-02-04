@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     isAuthenticated: sessionStorage.getItem('isAuthenticated') || localStorage.getItem('isAuthenticated') || false,
     token: sessionStorage.getItem('token') || localStorage.getItem('token') || null,
+    userData: sessionStorage.getItem('userData') || localStorage.getItem('userData') || null,
     error: null,
     rememberMe: false,
 };
@@ -24,6 +25,15 @@ const authSlice = createSlice({
                 state.rememberMe = false;
             }
         },
+        updateUserData: (state, action) => {
+            const userData = JSON.stringify(action.payload);
+            state.userData = userData;
+            if (!sessionStorage.getItem('isAuthenticated')) {
+                localStorage.setItem('userData', userData);
+            } else {
+                sessionStorage.setItem('userData', userData);
+            }
+        },
         logoutSuccess: (state) => {
             state.token = null;
             state.isAuthenticated = false;
@@ -31,9 +41,11 @@ const authSlice = createSlice({
             if (!sessionStorage.getItem('isAuthenticated')) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('isAuthenticated');
+                localStorage.removeItem('userData');
             } else {
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('isAuthenticated');
+                sessionStorage.removeItem('userData');
                 state.rememberMe = false;
             }
         },
@@ -46,5 +58,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { loginSuccess, logoutSuccess, loginFailure } = authSlice.actions;
+export const { loginSuccess, updateUserData, logoutSuccess, loginFailure } = authSlice.actions;
 export default authSlice.reducer;

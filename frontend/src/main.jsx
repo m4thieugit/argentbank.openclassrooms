@@ -6,9 +6,11 @@ import { Provider } from 'react-redux';
 import authStore from './authStore';
 import './index.css';
 
+import AuthMiddleware from './authMiddleware';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
+import User from './pages/User';
 import NotFound from './pages/NotFound';
 
 createRoot(document.getElementById('root')).render(
@@ -19,6 +21,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/user" element={<AuthMiddleware><User /></AuthMiddleware>}></Route>
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

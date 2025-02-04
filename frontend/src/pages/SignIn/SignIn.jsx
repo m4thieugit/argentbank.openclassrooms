@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import './SignIn.css';
 
-import { loginSuccess, loginFailure } from '../../authSlice';
-import { loginUser } from '../../authService';
+import { loginSuccess, updateUserData, loginFailure } from '../../authSlice';
+import { loginUser, fetchUserData } from '../../authService';
 import SignInForm from '../../components/SignInForm';
 
 const SignIn = () => {
@@ -23,7 +23,11 @@ const SignIn = () => {
             }
 
             const token = await loginUser(loginData);
-            dispatch(loginSuccess({ token, rememberMe: e.target['remember-me'].checked }));
+            const userData = await fetchUserData(token);
+
+            await dispatch(loginSuccess({ token, rememberMe: e.target['remember-me'].checked }));
+            await dispatch(updateUserData(userData));
+
             navigate('/user');
         } catch (error) {
             dispatch(loginFailure(error.message || 'Erreur de connexion'));

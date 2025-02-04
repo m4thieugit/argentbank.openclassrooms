@@ -5,13 +5,13 @@ import { logoutSuccess } from '../../authSlice';
 
 import './Navbar.css';
 
-import AppLogo from '../../assets/img/argentBankLogo.png';
+import AppLogo from '../../assets/img/argentBankLogo.webp';
 
 const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { isAuthenticated, token, userData } = useSelector((state) => state.auth);
+    const { isAuthenticated, userData } = useSelector((state) => state.auth);
     const uData = JSON.parse(userData);
 
     const logoutUser = () => { 

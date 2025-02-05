@@ -109,15 +109,13 @@ paths:
         - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
-      #produces:
-       # - application/json
+      produces:
+        - application/json
       responses:
         '200':
           description: User transactions retrieved successully
           schema:
             $ref: '#/definitions/TransactionsApiResponse'
-        '400':
-          description: Invalid Fields
         '500':
           description: Internal Server Error
   /user/transactions/monthly:
@@ -128,15 +126,13 @@ paths:
         - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
-      #produces:
-       # - application/json
+      produces:
+        - application/json
       responses:
         '200':
           description: User transactions made this month retrieved successully
           schema:
             $ref: '#/definitions/TransactionsApiResponse'
-        '400':
-          description: Invalid Fields
         '500':
           description: Internal Server Error
   /user/transactions/:id:
@@ -147,8 +143,8 @@ paths:
         - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
-      #produces:
-       # - application/json
+      produces:
+        - application/json
       responses:
         '200':
           description: User transactions retrieved successully

@@ -1,6 +1,6 @@
 import config from '../config.js';
 
-export async function loginUser(credentials) {
+async function loginUser(credentials) {
     try {
         const response = await fetch(config.backend.base_url + config.backend.endpoints.user.signin, {
             method: 'POST',
@@ -21,7 +21,7 @@ export async function loginUser(credentials) {
     }
 }
 
-export async function fetchUserData(token) {
+async function fetchUserData(token) {
     try {
         const response = await fetch(config.backend.base_url + config.backend.endpoints.user.profile, {
             method: 'GET',
@@ -42,7 +42,7 @@ export async function fetchUserData(token) {
     }
 }
 
-export async function updateUsername(token, userName) {
+async function updateUsername(token, userName) {
     try {
         const response = await fetch(config.backend.base_url + config.backend.endpoints.user.profile, {
             method: 'PUT',
@@ -63,3 +63,5 @@ export async function updateUsername(token, userName) {
         throw new Error('Une erreur est survenue lors de la tentative de récupération des données utilisateur.');
     }
 }
+
+export { loginUser, fetchUserData, updateUsername };

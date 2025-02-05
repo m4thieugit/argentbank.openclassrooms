@@ -109,30 +109,18 @@ paths:
         - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
+      parameters:
+        - in: body
+          name: body
+          description: Filter user transactions by month
+          required: false
+          schema:
+            $ref: '#/definitions/TransactionsApiRequest'
       produces:
         - application/json
       responses:
         '200':
           description: User transactions retrieved successully
-          schema:
-            $ref: '#/definitions/TransactionsApiResponse'
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-  /user/transactions/monthly:
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - User Transactions Module
-      summary: User Transaction API
-      description: API for fetching user transactions
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User transactions made this month retrieved successully
           schema:
             $ref: '#/definitions/TransactionsApiResponse'
         '401':
@@ -270,6 +258,12 @@ definitions:
       body:
         type: object
         $ref: '#/definitions/Transaction'
+  TransactionsApiRequest:
+    type: object
+    properties:
+      monthly:
+        type: boolean
+        default: false
   TransactionApiRequest:
     type: object
     properties:

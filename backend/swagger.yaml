@@ -106,7 +106,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
       #produces:
@@ -125,7 +125,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
       #produces:
@@ -139,12 +139,12 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions/id:
+  /user/transactions/:id:
     get:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
       #produces:
@@ -164,7 +164,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - User Transactions Module
       summary: User Transaction API
       description: API for updating a user transaction
       parameters:

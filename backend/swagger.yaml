@@ -101,6 +101,92 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Transaction API
+      description: API for fetching user transactions
+      #produces:
+       # - application/json
+      responses:
+        '200':
+          description: User transactions retrieved successully
+          schema:
+            $ref: '#/definitions/TransactionsApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transactions/monthly:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Transaction API
+      description: API for fetching user transactions
+      #produces:
+       # - application/json
+      responses:
+        '200':
+          description: User transactions made this month retrieved successully
+          schema:
+            $ref: '#/definitions/TransactionsApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transactions/id:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Transaction API
+      description: API for fetching user transactions
+      #produces:
+       # - application/json
+      responses:
+        '200':
+          description: User transactions retrieved successully
+          schema:
+            $ref: '#/definitions/TransactionApiResponse'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Transaction API
+      description: API for updating a user transaction
+      parameters:
+        - in: body
+          name: body
+          description: Update user transaction attributes
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionApiRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User transaction retrieved successully
+          schema:
+            $ref: '#/definitions/TransactionApiResponse'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -155,4 +241,54 @@ definitions:
     type: object
     properties:
       userName:
+        type: string
+  TransactionsApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          transations:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+  TransactionApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        $ref: '#/definitions/Transaction'
+  TransactionApiRequest:
+    type: object
+    properties:
+      note:
+        type: string
+      category:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: integer
+      description:
+        type: string
+      note:
+        type: string
+      category:
+        type: string
+      transactionType:
+        type: string
+      amount:
+        type: integer
+      balance:
+        type: integer
+      date:
         type: string

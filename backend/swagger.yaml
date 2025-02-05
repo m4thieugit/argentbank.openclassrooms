@@ -110,12 +110,12 @@ paths:
       summary: User Transaction API
       description: API for fetching user transactions
       parameters:
-        - in: body
-          name: body
-          description: Filter user transactions by month
+        - in: query
+          name: monthly
           required: false
           schema:
-            $ref: '#/definitions/TransactionsApiRequest'
+            type: boolean
+          description: Filter only transactions made this month
       produces:
         - application/json
       responses:
@@ -127,7 +127,7 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-  /user/transactions/:id:
+  /user/transactions/{id}:
     get:
       security:
         - Bearer: []
@@ -135,6 +135,14 @@ paths:
         - User Transactions Module
       summary: User Transaction API
       description: API for fetching user transactions
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The transaction ID
       produces:
         - application/json
       responses:
@@ -158,6 +166,13 @@ paths:
       summary: User Transaction API
       description: API for updating a user transaction
       parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The transaction ID
         - in: body
           name: body
           description: Update user transaction attributes
@@ -258,12 +273,6 @@ definitions:
       body:
         type: object
         $ref: '#/definitions/Transaction'
-  TransactionsApiRequest:
-    type: object
-    properties:
-      monthly:
-        type: boolean
-        default: false
   TransactionApiRequest:
     type: object
     properties:
